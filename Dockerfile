@@ -10,7 +10,7 @@ ARG MATPLOTLIB_VERSION=3.1.2
 
 # Build dependencies
 RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-            --update --no-cache python3 python3-dev libgfortran && \
+            --update --no-cache libgfortran && \
     # apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
     #         --update --no-cache py-numpy py-numpy-dev && \
     apk add --update --no-cache build-base libstdc++ \
@@ -18,15 +18,12 @@ RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
                                 freetype freetype-dev && \
     # Update musl to workaround a bug
     # apk upgrade --repository http://dl-cdn.alpinelinux.org/alpine/edge/main musl && \
-    # Make Python3 as default
     ln -fs /usr/include/locale.h /usr/include/xlocale.h && \
-    ln -fs /usr/bin/python3 /usr/local/bin/python && \
     # Install Python dependencies
     pip install -v --no-cache-dir numpy && \
     pip install -v --no-cache-dir matplotlib==$MATPLOTLIB_VERSION && \
     # Cleanup
     apk del --purge build-base libgfortran libpng-dev freetype-dev \
-                    python3-dev && \
                     # py-numpy-dev && \
     rm -vrf /var/cache/apk/*
 
