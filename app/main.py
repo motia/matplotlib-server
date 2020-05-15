@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
+@app.route("/healthz")
+def healthz():
+    return "ok"
 
 @app.route('/<chart>/plot.png')
 def plot_png(chart):
@@ -55,6 +58,4 @@ def create_figure(x, y, xTicks, xLabels, yTicks, yLabels, chart):
   return fig
 
 if __name__ == '__main__':
-    app.secret_key = 'super_secret_key'
-    app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+  app.run(host="0.0.0.0", debug=True, port=80)
