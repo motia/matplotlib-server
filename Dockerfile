@@ -1,5 +1,4 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.8
-
+FROM tiangolo/uwsgi-nginx-flask:python3.8-alpine
 
 ################################################################################
 ##    Dockerfile to build minimal Matplotlib image with Python3 and Numpy     ##
@@ -22,11 +21,9 @@ RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
     # Make Python3 as default
     ln -fs /usr/include/locale.h /usr/include/xlocale.h && \
     ln -fs /usr/bin/python3 /usr/local/bin/python && \
-    ln -fs /usr/bin/pip3 /usr/local/bin/pip && \
     # Install Python dependencies
-    pip3 install -v --no-cache-dir --upgrade pip && \
-    pip3 install -v --no-cache-dir numpy && \
-    pip3 install -v --no-cache-dir matplotlib==$MATPLOTLIB_VERSION && \
+    pip install -v --no-cache-dir numpy && \
+    pip install -v --no-cache-dir matplotlib==$MATPLOTLIB_VERSION && \
     # Cleanup
     apk del --purge build-base libgfortran libpng-dev freetype-dev \
                     python3-dev && \
